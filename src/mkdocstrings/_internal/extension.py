@@ -189,7 +189,7 @@ class AutoDocProcessor(BlockProcessor):
         if "locale" in signature(handler.render).parameters:
             render = partial(handler.render, locale=self._handlers._locale)
         else:
-            render = handler.render  # type: ignore[assignment]
+            render = handler.render
         try:
             rendered = render(data, options)
         except TemplateNotFound as exc:
@@ -301,7 +301,7 @@ class _HeadingsPostProcessor(Treeprocessor):
 
 class _TocLabelsTreeProcessor(Treeprocessor):
     def run(self, root: Element) -> None:  # noqa: ARG002
-        self._override_toc_labels(self.md.toc_tokens)  # type: ignore[attr-defined]
+        self._override_toc_labels(self.md.toc_tokens)  # ty: ignore[unresolved-attribute]
 
     def _override_toc_labels(self, tokens: list[dict[str, Any]]) -> None:
         for token in tokens:
@@ -349,7 +349,7 @@ class MkdocstringsExtension(Extension):
 
         # Zensical integration: get the current page from the Zensical-specific preprocessor.
         if "zensical_current_page" in md.preprocessors:
-            self._autorefs.current_page = md.preprocessors["zensical_current_page"]  # type: ignore[assignment]
+            self._autorefs.current_page = md.preprocessors["zensical_current_page"]
 
         md.parser.blockprocessors.register(
             AutoDocProcessor(md, handlers=self._handlers, autorefs=self._autorefs),
@@ -389,7 +389,7 @@ _default_config: dict[str, Any] = {
 
 def _split_configs(markdown_extensions: list[str | dict]) -> tuple[list[str | Extension], dict[str, Any]]:
     # Split markdown extensions and their configs from mkdocs.yml
-    mdx: list[str] = []
+    mdx: list[str | Extension] = []
     mdx_config: dict[str, Any] = {}
     for item in markdown_extensions:
         if isinstance(item, str):
@@ -399,7 +399,7 @@ def _split_configs(markdown_extensions: list[str | dict]) -> tuple[list[str | Ex
                 mdx.append(key)
                 mdx_config[key] = value
                 break  # Only one item per dict
-    return mdx, mdx_config  # type: ignore[return-value]
+    return mdx, mdx_config
 
 
 class _ToolConfig:

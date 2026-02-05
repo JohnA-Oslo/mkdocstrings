@@ -79,7 +79,13 @@ def check_types(ctx: Context) -> None:
     """Check that the code is correctly typed."""
     py = f"{sys.version_info.major}.{sys.version_info.minor}"
     ctx.run(
-        tools.ty.check(*PY_SRC_LIST, color=True, error_on_warning=True, python_version=py),
+        tools.ty.check(
+            *PY_SRC_LIST,
+            config_file="config/ty.toml",
+            color=True,
+            error_on_warning=True,
+            python_version=py,
+        ),
         title=pyprefix("Type-checking"),
     )
 

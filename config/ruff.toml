@@ -18,6 +18,7 @@ ignore = [
     "EM101",  # String literal when raising exception
     "EM102",  # f-string when raising exception
     "ERA001",  # Commented out code
+    "FIX",  # TODO, FIXME, etc.
     "G004",  # Logging statement uses f-string
     "PLR0911",  # Too many return statements
     "PLR0912",  # Too many branches
@@ -25,6 +26,8 @@ ignore = [
     "PLR0915",  # Too many statements
     "SLF001", # Private member accessed
     "S704", # Unsafe use of `markupsafe.Markup`
+    "TD002",  # Missing author in TODO
+    "TD003",  # Missing issue link for TODO
     "TRY003",  # Avoid specifying long messages outside the exception class
 ]
 
