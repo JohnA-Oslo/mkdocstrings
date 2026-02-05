@@ -387,12 +387,14 @@ _default_config: dict[str, Any] = {
 }
 
 
-def _split_configs(markdown_extensions: list[str | dict]) -> tuple[list[str | Extension], dict[str, Any]]:
+def _split_configs(
+    markdown_extensions: list[str | dict[str, dict[str, Any]] | Extension],
+) -> tuple[list[str | Extension], dict[str, dict[str, Any]]]:
     # Split markdown extensions and their configs from mkdocs.yml
     mdx: list[str | Extension] = []
-    mdx_config: dict[str, Any] = {}
+    mdx_config: dict[str, dict[str, Any]] = {}
     for item in markdown_extensions:
-        if isinstance(item, str):
+        if isinstance(item, (str, Extension)):
             mdx.append(item)
         elif isinstance(item, dict):
             for key, value in item.items():
@@ -418,7 +420,7 @@ def makeExtension(  # noqa: N802
     inventory_version: str | None = None,
     handlers: dict[str, dict] | None = None,
     custom_templates: str | None = None,
-    markdown_extensions: list[str | dict] | None = None,
+    markdown_extensions: list[str | dict | Extension] | None = None,
     locale: str | None = None,
     config_file_path: str | None = None,
 ) -> MkdocstringsExtension:
