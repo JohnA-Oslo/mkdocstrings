@@ -477,6 +477,10 @@ class BaseHandler:
             relpath = md.treeprocessors["relpath"]
             new_relpath = type(relpath)(relpath.file, relpath.files, relpath.config)  # type: ignore[attr-defined,call-arg]
             new_md.treeprocessors.register(new_relpath, "relpath", priority=0)
+        elif "zrelpath" in md.treeprocessors:
+            zrelpath = md.treeprocessors["zrelpath"]
+            new_zrelpath = type(zrelpath)(new_md, zrelpath.path, zrelpath.use_directory_urls)  # type: ignore[attr-defined,call-arg]
+            new_md.treeprocessors.register(new_zrelpath, "zrelpath", priority=0)
 
         self._md = new_md
 
